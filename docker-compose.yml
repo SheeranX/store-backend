@@ -4,7 +4,7 @@ services:
   # MySQL 服务
   mysql:
     working_dir: /app
-    image: mysql:5.7
+    image: mysql:latest
     ports:
       - 13306:3306
     environment:

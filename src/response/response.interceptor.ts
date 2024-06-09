@@ -15,7 +15,8 @@ import { Request } from 'express'
 export interface Response<T> {
   data: T
   statusCode: number
-  message: string
+  message: string,
+  code: number
 }
 
 @Injectable()
@@ -41,6 +42,7 @@ implements NestInterceptor<T, Response<T>> {
           data,
           message: '请求成功',
           statusCode: 200,
+          code: 200
         }
       }),
     )

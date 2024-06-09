@@ -30,6 +30,8 @@ export class AppController {
     return this.userService.createUser({
       username: 'xxx',
       password: 'xxx',
+      userId: 'xxxxx',
+      nickName: 'xxxxxx'
     })
   }
 }

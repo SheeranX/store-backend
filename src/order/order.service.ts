@@ -3,6 +3,7 @@ import { Order, Prisma } from '@prisma/client'
 import { PrismaService } from '../prisma/prisma.service'
 import { CreateOrderDto } from './dto/createOrder.dto'
 import { UpdateOrderDto } from './dto/updateOrder.dto'
+import { OrderStatus } from "@prisma/client";
 
 @Injectable()
 export class OrderService {
@@ -20,7 +21,7 @@ export class OrderService {
     const [list, pagination] = await this.prisma.pg().order.paginate({
       where,
       orderBy: {
-        createdAt: 'desc',
+        createdTime: 'desc',
       },
     }).withPages({ includePageCount: true, ...data })
     return {
@@ -36,7 +37,7 @@ export class OrderService {
   }
 
   async done(where: Prisma.OrderWhereUniqueInput) {
-    return await this.prisma.order.update({ where, data: { isComplete: true } })
+    return await this.prisma.order.update({ where, data: { status: OrderStatus.COMPLETED } })
   }
 
   async update(where: Prisma.OrderWhereUniqueInput, data: Prisma.OrderUpdateInput) {

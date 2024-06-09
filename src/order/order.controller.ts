@@ -25,9 +25,10 @@ export class OrderController {
   async create(@Body() createOrderDto: CreateOrderDto, @Req() req: { user: JwtPayload }) {
     return await this.orderService.create({
       ...createOrderDto,
+      orderItems: {},
       user: {
-        connect: { id: req.user.id },
-      },
+        connect: { id: req.user.id }
+      }
     })
   }
 
@@ -73,8 +74,8 @@ export class OrderController {
       createdAt.lte = new Date(endTime).toISOString()
     return await this.orderService.page({ page, limit }, {
       ...query,
-      createdAt,
-      userId: req.user.userId,
+      createdTime: createdAt,
+      userId: req.user.userId
     })
   }
 
@@ -87,9 +88,9 @@ export class OrderController {
   @ApiResponse({
     type: GetOrderDto,
   })
-  @Get(':orderId')
-  async findOne(@Param('orderId') orderId: string, @Req() req: { user: JwtPayload }) {
-    return await this.orderService.findOne({ orderId, userId: req.user.userId })
+  @Get(':orderNumber')
+  async findOne(@Param('orderNumber') orderNumber: string, @Req() req: { user: JwtPayload }) {
+    return await this.orderService.findOne({ orderNumber, userId: req.user.userId })
   }
 
   @ApiOperation({ summary: '根据id完成订单' })
@@ -101,9 +102,9 @@ export class OrderController {
   @ApiResponse({
     type: GetOrderDto,
   })
-  @Post('/done/:orderId')
-  async done(@Param('orderId') orderId: string, @Req() req: { user: JwtPayload }) {
-    return await this.orderService.done({ orderId, userId: req.user.userId })
+  @Post('/done/:orderNumber')
+  async done(@Param('orderNumber') orderNumber: string, @Req() req: { user: JwtPayload }) {
+    return await this.orderService.done({ orderNumber, userId: req.user.userId })
   }
 
   @ApiOperation({ summary: '根据id更新订单' })
@@ -119,9 +120,9 @@ export class OrderController {
   @ApiResponse({
     type: GetOrderDto,
   })
-  @Patch(':orderId')
-  async update(@Param('orderId') orderId: string, @Body() body: Prisma.OrderUpdateInput, @Req() req: { user: JwtPayload }) {
-    return await this.orderService.update({ orderId, userId: req.user.userId }, body)
+  @Patch(':orderNumber')
+  async update(@Param('orderNumber') orderNumber: string, @Body() body: Prisma.OrderUpdateInput, @Req() req: { user: JwtPayload }) {
+    return await this.orderService.update({ orderNumber, userId: req.user.userId }, body)
   }
 
   @ApiOperation({ summary: '删除订单' })
@@ -133,8 +134,8 @@ export class OrderController {
   @ApiResponse({
     type: GetOrderDto,
   })
-  @Delete(':orderId')
-  async remove(@Param('orderId') orderId: string, @Req() req: { user: JwtPayload }) {
-    return await this.orderService.remove({ orderId, userId: req.user.userId })
+  @Delete(':orderNumber')
+  async remove(@Param('orderNumber') orderNumber: string, @Req() req: { user: JwtPayload }) {
+    return await this.orderService.remove({ orderNumber, userId: req.user.userId })
   }
 }

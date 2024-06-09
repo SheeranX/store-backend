@@ -4,6 +4,7 @@ import {
   Get,
   Inject,
   Post,
+  HttpCode,
   Request,
   UnauthorizedException,
   UseGuards,
@@ -60,6 +61,7 @@ export class UserController {
     type: loginUserResDto,
   })
   @Post('/login')
+  @HttpCode(200)
   async login(@Body() loginUserDto: LoginUserDto) {
     const user = await this.useService.login(loginUserDto)
     if (!user)
@@ -68,6 +70,7 @@ export class UserController {
     await this.cacheManager.set(`user:${user.id}:${user.userId}`, user)
     return {
       accessToken: access_token,
+      username: loginUserDto.username
     }
   }
 

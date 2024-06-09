@@ -5,5 +5,5 @@ export class GetOrderDto extends CreateOrderDto {
   @ApiProperty({
     description: '订单id',
   })
-  orderId: string
+  orderNumber: string
 }

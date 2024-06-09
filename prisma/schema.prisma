@@ -9,34 +9,132 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  userId    String   @unique @default(uuid())
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isActive  Boolean  @default(true)
-  Order     Order[]
+  id          Int       @id @default(autoincrement())
+  userId      String?   @unique
+  password    String
+  username    String    @unique
+  nickName    String?
+  createdTime DateTime  @default(now())
+  updatedTime DateTime  @updatedAt
+  addresses   Address[]
+  cart        Cart?
+  orders      Order[]
+}
+
+model Cart {
+  id     Int        @id @default(autoincrement())
+  user   User       @relation(fields: [userId], references: [userId])
+  userId String     @unique
+  items  CartItem[]
+}
+
+model CartItem {
+  id        Int     @id @default(autoincrement())
+  quantity  Int
+  productId String  @unique
+  product   Product @relation(fields: [productId], references: [productId])
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  cartId    Int
+}
+
+model Product {
+  id           Int          @id @default(autoincrement())
+  productId    String       @unique @default(uuid())
+  title        String
+  brand        Brand        @relation(fields: [brandId], references: [brandId])
+  brandId      String
+  catalogId    String
+  catalog      Catalog      @relation(fields: [catalogId], references: [catalogId])
+  subCatalog   SubCatalog   @relation(fields: [subCatalogId], references: [subCatalogId])
+  subCatalogId String
+  desc         String
+  details      String
+  stock        Int
+  imgUrls      String
+  ref          String
+  productSku   ProductSku[]
+  createTime   DateTime     @default(now())
+  updateTime   DateTime     @updatedAt
+  cartItems    CartItem[]
+  orderItems   OrderItem[]
+}
+
+model ProductSku {
+  id        Int     @id @default(autoincrement())
+  productId String
+  product   Product @relation(fields: [productId], references: [productId])
+  text      String
+  sku       Sku     @relation(fields: [skuId], references: [id])
+  skuId     Int
+}
+
+model Sku {
+  id         Int          @id @default(autoincrement())
+  text       String
+  productSku ProductSku[]
+}
+
+model Brand {
+  id        Int       @id @default(autoincrement())
+  brandId   String    @unique @default(uuid())
+  brandName String
+  products  Product[]
+}
+
+model Catalog {
+  id          Int          @id @default(autoincrement())
+  catalogId   String       @unique @default(uuid())
+  name        String
+  subCatalogs SubCatalog[]
+  products    Product[]
+}
+
+model SubCatalog {
+  id           Int       @id @default(autoincrement())
+  subCatalogId String    @unique @default(uuid())
+  catalog      Catalog   @relation(fields: [catalogId], references: [catalogId])
+  catalogId    String
+  name         String
+  products     Product[]
+}
+
+model Address {
+  id     Int     @id @default(autoincrement())
+  name   String
+  phone  String
+  state  String
+  city   String
+  street String
+  user   User    @relation(fields: [userId], references: [userId])
+  userId String
 }
 
 model Order {
-  id          Int       @id @default(autoincrement())
-  name        String
-  phone       String
-  requirement String
-  typeDesc    String?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
-  isComplete  Boolean?  @default(false)
-  type        OrderType @default(CUSTOMER)
-  user        User      @relation(fields: [userId], references: [userId])
+  id          Int         @id @default(autoincrement())
+  orderNumber String      @unique @default(uuid())
+  createdTime DateTime?    @default(now())
+  updatedTime DateTime?    @updatedAt
   userId      String
-  orderId     String    @unique @default(uuid())
+  user        User        @relation(fields: [userId], references: [userId])
+  addressId   Int
+  orderItems  OrderItem[]
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
 }
 
-enum OrderType {
-  CUSTOMER
-  ENTERPRISE
-  RESTAURANT
-  OTHER
+model OrderItem {
+  id          Int     @id @default(autoincrement())
+  quantity    Int
+  productId   String
+  orderNumber String
+  product     Product @relation(fields: [productId], references: [productId])
+  order       Order   @relation(fields: [orderNumber], references: [orderNumber])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  COMPLETED
+  CANCELLED
 }
