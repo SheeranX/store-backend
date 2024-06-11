@@ -32,7 +32,6 @@ model CartItem {
   id        Int     @id @default(autoincrement())
   quantity  Int
   productId String  @unique
-  product   Product @relation(fields: [productId], references: [productId])
   cart      Cart    @relation(fields: [cartId], references: [id])
   cartId    Int
 }
@@ -43,35 +42,27 @@ model Product {
   title        String
   brand        Brand        @relation(fields: [brandId], references: [brandId])
   brandId      String
-  catalogId    String
-  catalog      Catalog      @relation(fields: [catalogId], references: [catalogId])
-  subCatalog   SubCatalog   @relation(fields: [subCatalogId], references: [subCatalogId])
+  catalogId    String?
   subCatalogId String
   desc         String
   details      String
   stock        Int
   imgUrls      String
   ref          String
-  productSku   ProductSku[]
   createTime   DateTime     @default(now())
   updateTime   DateTime     @updatedAt
-  cartItems    CartItem[]
-  orderItems   OrderItem[]
+  productSkuIds String
 }
 
 model ProductSku {
   id        Int     @id @default(autoincrement())
-  productId String
-  product   Product @relation(fields: [productId], references: [productId])
   text      String
-  sku       Sku     @relation(fields: [skuId], references: [id])
-  skuId     Int
+  skuIds    String
 }
 
 model Sku {
   id         Int          @id @default(autoincrement())
   text       String
-  productSku ProductSku[]
 }
 
 model Brand {
@@ -85,17 +76,13 @@ model Catalog {
   id          Int          @id @default(autoincrement())
   catalogId   String       @unique @default(uuid())
   name        String
-  subCatalogs SubCatalog[]
-  products    Product[]
 }
 
 model SubCatalog {
   id           Int       @id @default(autoincrement())
   subCatalogId String    @unique @default(uuid())
-  catalog      Catalog   @relation(fields: [catalogId], references: [catalogId])
   catalogId    String
   name         String
-  products     Product[]
 }
 
 model Address {
@@ -127,7 +114,6 @@ model OrderItem {
   quantity    Int
   productId   String
   orderNumber String
-  product     Product @relation(fields: [productId], references: [productId])
   order       Order   @relation(fields: [orderNumber], references: [orderNumber])
 }
 

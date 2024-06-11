@@ -70,7 +70,7 @@ export class UserController {
     await this.cacheManager.set(`user:${user.id}:${user.userId}`, user)
     return {
       accessToken: access_token,
-      username: loginUserDto.username
+      ...user
     }
   }
 

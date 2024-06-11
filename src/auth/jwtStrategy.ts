@@ -10,7 +10,7 @@ import { AuthService } from './auth.service'
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromHeader('token'),
       secretOrKey: 'your-secret-key', // 用于验证签名的密钥，你应该更改为实际使用的密钥
     })
   }

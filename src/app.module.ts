@@ -22,6 +22,8 @@ import CommonExceptionFilter from './exception/commonException.filter'
 import LoggerMiddleware from './logger/logger.middleware'
 import { FileModule } from './file/file.module'
 import { OrderModule } from './order/order.module'
+import { ProductModule } from './product/product.module'
+import { BrandModule }  from './brand/brand.module'
 
 @Module({
   imports: [
@@ -94,6 +96,10 @@ import { OrderModule } from './order/order.module'
     FileModule,
     // 订单模块
     OrderModule,
+    // 产品模块
+    ProductModule,
+    // 品牌模块
+    BrandModule
   ],
   // controllers: [AppController],
   providers: [

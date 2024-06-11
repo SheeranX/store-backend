@@ -19,6 +19,7 @@ export class AuthService {
 
   async validateUserByJwt(payload: JwtPayload) {
     const hasUser = await this.cacheManager.get(`user:${payload.id}:${payload.userId}`)
+    console.log(payload, '++')
     // 根据 payload 中的信息验证用户
     // 例如，从数据库中检索用户信息并返回
     // 请根据你的实际需求进行实现

@@ -26,7 +26,7 @@ export class OrderService {
     }).withPages({ includePageCount: true, ...data })
     return {
       list,
-      pagination,
+      pagination
     }
   }
 
