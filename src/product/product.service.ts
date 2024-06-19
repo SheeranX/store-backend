@@ -29,7 +29,6 @@ export class ProductService {
       obj[cur.catalogId] = cur.name
       return obj
     }, {})
-    console.log(catalogIdsMap, 'catalogList')
     const subCatalogList = await this.subCatalogService.findAll({
       where: {
         subCatalogId: {
