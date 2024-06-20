@@ -7,6 +7,7 @@ import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.setGlobalPrefix(process.env.PREFIX)
   const PORT = process.env.PORT || 3000
   // swagger
   const config = new DocumentBuilder()
