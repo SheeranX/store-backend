@@ -33,7 +33,10 @@ import { CatalogModule } from './catalog/catalog.module'
       rootPath: join(__dirname, '..', 'public'),
     }),
     // 配置文件
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env.dev', '.env', '.env.prod']
+    }),
     // 日志
     WinstonModule.forRoot({
       transports: [

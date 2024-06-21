@@ -23,6 +23,7 @@ import { FileService } from './file.service'
 import { UploadFileDto } from './dto/upload-file.dto'
 import { UploadFilesDto } from './dto/upload-files.dto'
 import { updateFileResDto } from './dto/upload-file-res-dto'
+const URL = process.env.RUNNING_ENV === 'dev' ? './public/upload/' : '../public/upload/'
 
 @ApiTags('File')
 @Controller('file')
@@ -45,7 +46,7 @@ export class FileController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './public/upload/',
+        destination: URL,
         filename: (req, file, callback) => {
           const ext = extname(file.originalname)
           callback(null, randomUUID() + ext)
@@ -74,7 +75,7 @@ export class FileController {
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       storage: diskStorage({
-        destination: './public/upload/',
+        destination: URL,
         filename: (req, file, callback) => {
           const ext = extname(file.originalname)
           callback(null, randomUUID() + ext)
