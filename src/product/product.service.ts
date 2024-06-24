@@ -1,11 +1,13 @@
 import { Prisma } from "@prisma/client";
 import { PrismaService } from "../prisma/prisma.service";
-import { Injectable } from "@nestjs/common";
+import { Injectable, forwardRef, Inject } from "@nestjs/common";
 import { CatalogService, SubCatalogService } from "src/catalog/catalog.service";
+import { FileService } from "src/file/file.service";
+import { UpdateProductDto } from "./dto/updateProductDto";
 
 @Injectable()
 export class ProductService {
-  constructor (private prisma: PrismaService, private catalogService: CatalogService, private subCatalogService: SubCatalogService) {}
+  constructor (private prisma: PrismaService, private catalogService: CatalogService, private subCatalogService: SubCatalogService, @Inject(forwardRef(() => FileService)) private fileService: FileService) {}
   async create (data: Prisma.ProductCreateInput) {
     return await this.prisma.product.create({ data })
   }
@@ -53,8 +55,41 @@ export class ProductService {
   }
 
   async remove(where: Prisma.ProductWhereUniqueInput) {
-    return await this.prisma.product.delete({ where }).then(() => {
-      return true
+    const res = await this.prisma.product.delete({ where })
+    // 产品删除时，同时删除对应图片文件
+    const { details, imgUrls, ref } = res
+    await this.fileService.removeMany(details)
+    await this.fileService.removeMany(imgUrls)
+    await this.fileService.removeMany(ref)
+    return true
+  }
+
+  async update(where: Prisma.ProductWhereUniqueInput, data: Prisma.ProductUpdateInput) {
+    return await this.prisma.product.update({ where, data })
+  }
+
+  async findByUrl (url) {
+    url = url.replace(/^\/upload\//, '')
+    return await this.prisma.product.findMany({
+      where: {
+        OR: [
+          {
+            imgUrls: {
+              contains: url,
+            }
+          },
+          {
+            ref: {
+              contains: url,
+            }
+          },
+          {
+            details: {
+              contains: url,
+            }
+          }
+        ]
+      }
     })
   }
 }

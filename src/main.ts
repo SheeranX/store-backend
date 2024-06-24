@@ -18,7 +18,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api_docs', app, document)
   // 参数校验
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: false,
+    transform: true
+  }))
   // 安全
   app.use(helmet())
   await app.listen(PORT)

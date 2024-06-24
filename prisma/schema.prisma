@@ -52,6 +52,7 @@ model Product {
   createTime   DateTime     @default(now())
   updateTime   DateTime     @updatedAt
   productSkuIds String
+  price Float
 }
 
 model ProductSku {

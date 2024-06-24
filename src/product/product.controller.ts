@@ -1,8 +1,12 @@
-import { Body, Controller, Delete, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Param, ParseIntPipe, Post, Query, Req, UseGuards, Put } from '@nestjs/common'
 import { ProductService } from './product.service'
 import { CreateProductDto } from './dto/createProduct'
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiProperty, ApiTags, ApiResponse } from '@nestjs/swagger'
+import { Prisma } from '@prisma/client'
 import { JwtGuard } from 'src/guards/jwt/jwt.guard'
+import { JwtPayload } from 'src/auth/jwtPayload.interface'
+import { UpdateProductDto } from './dto/updateProductDto'
+import { QueryProductDto } from './dto/queryProductDto'
 
 @ApiTags('Product')
 @Controller('product')
@@ -42,6 +46,32 @@ export class ProductController {
     return await this.productService.page({ page, limit })
   }
 	
+  @ApiOperation({ summary: '根据id更新产品' })
+  @ApiParam({
+    name: 'id',
+    description: '产品id',
+    required: true,
+  })
+  @ApiBody({
+    description: '更新产品',
+    type: UpdateProductDto,
+  })
+  @ApiResponse({
+    type: QueryProductDto,
+  })
+  @Put('/update/:id')
+  async update(@Param('id') id: number, @Body() body: UpdateProductDto) {
+    const { brandId, ...params } = body
+    return await this.productService.update({ id }, {
+      ...params,
+      brand: {
+        connect: {
+          brandId
+        }
+      }
+    })
+  }
+
 	@ApiProperty({ description: '删除产品' })
 	@ApiParam({
     name: 'id',

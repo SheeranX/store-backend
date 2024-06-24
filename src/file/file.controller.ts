@@ -7,6 +7,7 @@ import {
   ApiOperation,
   ApiResponse,
   ApiTags,
+  ApiParam
 } from '@nestjs/swagger'
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
@@ -17,6 +18,8 @@ import {
   UploadedFiles,
   UseGuards,
   UseInterceptors,
+  Delete,
+  Param
 } from '@nestjs/common'
 import { JwtGuard } from '../guards/jwt/jwt.guard'
 import { FileService } from './file.service'
@@ -88,5 +91,17 @@ export class FileController {
       acc[decodeURIComponent(escape(file.originalname))] = `/upload/${file.filename}`
       return acc
     }, {})
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '文件删除' })
+  @ApiParam({
+    name: 'name',
+    description: 'name',
+    required: true,
+  })
+  @Delete('/delete/:name')
+  async removeFile (@Param('name') name: string) {
+    return await this.fileService.remove(name)
   }
 }

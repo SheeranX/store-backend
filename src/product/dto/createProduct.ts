@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, Length } from 'class-validator'
+import { IsNotEmpty, Length, IsString } from 'class-validator'
 
 export class CreateProductDto {
 	@ApiProperty({
@@ -46,6 +46,7 @@ export class CreateProductDto {
 	@IsNotEmpty({ message: '库存' })
 	stock: number
 
+	@IsString()
 	@ApiProperty({
 		description: '轮播图'
 	})
