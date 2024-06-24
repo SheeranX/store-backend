@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, Length, IsString } from 'class-validator'
+import { IsNotEmpty, Length, IsString, IsNumber } from 'class-validator'
 
 export class CreateProductDto {
 	@ApiProperty({
@@ -66,4 +66,10 @@ export class CreateProductDto {
   @ApiProperty({ description: '品牌id' })
   @IsNotEmpty({ message: '品牌id不能为空' })
   brandId: string
+
+	@ApiProperty({ description: '价格' })
+  @IsNotEmpty({ message: '价格不能为空' })
+	@IsNumber()
+  price: number
+
 }
