@@ -44,11 +44,11 @@ model Product {
   brandId      String
   catalogId    String?
   subCatalogId String
-  desc         String
-  details      String
+  desc         String @db.Text
+  details      String @db.Text
   stock        Int
-  imgUrls      String
-  ref          String
+  imgUrls      String @db.Text
+  ref          String @db.Text
   createTime   DateTime     @default(now())
   updateTime   DateTime     @updatedAt
   productSkuIds String
