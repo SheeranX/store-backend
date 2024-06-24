@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `User` MODIFY `userId` VARCHAR(191) NULL,
-    MODIFY `nickName` VARCHAR(191) NULL;
