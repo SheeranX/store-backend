@@ -70,6 +70,7 @@ model Brand {
   id        Int       @id @default(autoincrement())
   brandId   String    @unique @default(uuid())
   brandName String
+  logo String?
   products  Product[]
 }
 
@@ -77,6 +78,7 @@ model Catalog {
   id          Int          @id @default(autoincrement())
   catalogId   String       @unique @default(uuid())
   name        String
+  imgUrl String?
 }
 
 model SubCatalog {
@@ -84,6 +86,7 @@ model SubCatalog {
   subCatalogId String    @unique @default(uuid())
   catalogId    String
   name         String
+  imgUrl String?
 }
 
 model Address {
