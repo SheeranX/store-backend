@@ -35,7 +35,7 @@ import { CatalogModule } from './catalog/catalog.module'
     // 配置文件
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.dev', '.env', '.env.prod']
+      envFilePath: [`.env.${process.env.RUNNING_ENV}`, '.env']
     }),
     // 日志
     WinstonModule.forRoot({
@@ -125,10 +125,11 @@ import { CatalogModule } from './catalog/catalog.module'
       provide: APP_FILTER,
       useClass: CommonExceptionFilter,
     },
-  ],
+  ]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    console.log(process.env.RUNNING_ENV, 'env')
     consumer.apply(LoggerMiddleware).forRoutes('*')
   }
 }

@@ -11,7 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromHeader('token'),
-      secretOrKey: 'your-secret-key', // 用于验证签名的密钥，你应该更改为实际使用的密钥
+      secretOrKey: process.env.SECRET_KEY, // 用于验证签名的密钥，你应该更改为实际使用的密钥
     })
   }
 
