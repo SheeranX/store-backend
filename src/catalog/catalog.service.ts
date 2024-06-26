@@ -31,6 +31,7 @@ export class CatalogService {
       return true
     })
   }
+
 }
 
 @Injectable()
@@ -64,5 +65,9 @@ export class SubCatalogService {
 
   async findAll(data: Prisma.SubCatalogFindManyArgs) {
     return await this.prisma.subCatalog.findMany(data)
+  }
+
+  async update (where: Prisma.SubCatalogWhereUniqueInput, data: Prisma.SubCatalogUpdateInput) {
+    return await this.prisma.subCatalog.update({ where, data })
   }
 }

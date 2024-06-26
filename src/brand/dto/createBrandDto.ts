@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, Length } from 'class-validator'
+import { IsNotEmpty, IsString, Length } from 'class-validator'
 
 export class CreateBrandDto {
 	@ApiProperty({
@@ -7,4 +7,9 @@ export class CreateBrandDto {
 	})
 	@IsNotEmpty({ message: '品牌名不能为空' })
 	brandName: string
+
+	@ApiProperty({
+		description: 'logo'
+	})
+	logo: string
 }

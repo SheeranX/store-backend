@@ -1,8 +1,8 @@
-import { Body, Controller, Post, UseGuards, Param, ParseIntPipe, Get, Delete, Req } from '@nestjs/common'
+import { Body, Controller, Post, UseGuards, Param, ParseIntPipe, Get, Delete, Req, Put } from '@nestjs/common'
 import { CatalogService, SubCatalogService } from './catalog.service'
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiProperty, ApiTags, ApiResponse } from '@nestjs/swagger'
 import { JwtGuard } from 'src/guards/jwt/jwt.guard'
-import { CatalogDto, SubCatalogDto } from './dto/createCatalog'
+import { CatalogDto, SubCatalogDto, UpdateSubCatalogDto } from './dto/createCatalog'
 import { JwtPayload } from 'src/auth/jwtPayload.interface'
 
 @ApiTags('Catalog')
@@ -120,5 +120,15 @@ export class SubCatalogController {
   @Delete('/delete/:id')
   async remove(@Param('id') id: number) {
     return await this.subCatalogService.remove({ id: +id })
+  }
+
+  @ApiOperation({ summary: '更新小类' })
+  @ApiBody({
+    type: UpdateSubCatalogDto
+  })
+  @Put('/update')
+  async update (@Body() body: UpdateSubCatalogDto) {
+    const { id, ...params } = body
+    return await this.subCatalogService.update({ id }, params)
   }
 }

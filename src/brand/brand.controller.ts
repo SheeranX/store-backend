@@ -1,9 +1,11 @@
-import { Body, Controller, Post, UseGuards, Param, ParseIntPipe, Get, Delete } from '@nestjs/common'
+import { Body, Controller, Post, UseGuards, Param, ParseIntPipe, Get, Delete, Put } from '@nestjs/common'
 import { BrandService } from './brand.service'
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiProperty, ApiTags, ApiResponse } from '@nestjs/swagger'
 import { JwtGuard } from 'src/guards/jwt/jwt.guard'
 import { CreateBrandDto } from './dto/createBrandDto'
 import { JwtPayload } from 'src/auth/jwtPayload.interface'
+import { UpdateBrandDto } from './dto/updateBrandDto'
+import { GetBrandDto } from './dto/getBrandDto'
 
 @ApiTags('Brand')
 @Controller('brand')
@@ -54,5 +56,19 @@ export class BrandController {
   @Delete('/delete/:id')
   async remove(@Param('id') id: number) {
     return await this.brandService.remove({ id: +id })
+  }
+
+  @ApiOperation({ summary: '更新品牌' })
+  @ApiBody({
+    description: '更新订单',
+    type: UpdateBrandDto,
+  })
+  @ApiResponse({
+    type: GetBrandDto
+  })
+  @Put('/update')
+  async update(@Body() body: UpdateBrandDto) {
+    const { id, ...params } = body
+    return await this.brandService.update({ id }, params)
   }
 }

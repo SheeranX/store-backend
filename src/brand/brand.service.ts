@@ -27,4 +27,8 @@ export class BrandService {
       return true
     })
   }
+
+  async update(where: Prisma.BrandWhereUniqueInput, data: Prisma.BrandUpdateInput) {
+    return await this.prisma.brand.update({ where, data })
+  }
 }
