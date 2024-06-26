@@ -1,5 +1,5 @@
 import { ApiProperty, IntersectionType } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsString, Length } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from "class-validator";
 
 export class CatalogDto {
   @ApiProperty({ description: '大类名' })
@@ -26,7 +26,7 @@ export class SubCatalogDto {
   @ApiProperty({
 		description: '图片'
 	})
-  @IsString()
+  @IsOptional()
 	imgUrl: string
 }
 
