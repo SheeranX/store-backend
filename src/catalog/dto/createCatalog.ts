@@ -1,5 +1,5 @@
 import { ApiProperty, IntersectionType } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, Length } from "class-validator";
 
 export class CatalogDto {
   @ApiProperty({ description: '大类名' })

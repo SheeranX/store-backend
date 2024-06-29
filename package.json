@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "postinstall": "prisma generate",
-    "build": "nest build",
+    "build": "cross-env RUNNING_ENV=prod nest build",
     "fix": "eslint --fix .",
     "start": "cross-env RUNNING_ENV=prod nest start",
     "start:dev": "cross-env RUNNING_ENV=dev nest start --watch",
