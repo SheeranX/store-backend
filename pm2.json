@@ -1,0 +1,23 @@
+{
+  "apps": [
+    {
+      "name": "store-backend",
+      "script": "./dist/main.js",
+      "env": {
+        "NODE_ENV": "prod"
+      },
+      "env_production": {
+        "NODE_ENV": "prod"
+      },
+      "exec_mode": "fork",
+      "instances": 1,
+      "max_restarts" : 3,
+      "restart_delay" : 5000,
+      "log_date_format" : "YYYY-MM-DD HH:mm Z",
+      "combine_logs" : true,
+      "log_file": "./combined.outerr.log",
+      "out_file": "./out.log",
+      "error_file": "./err.log"
+    }
+  ]
+}
