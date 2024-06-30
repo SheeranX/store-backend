@@ -26,6 +26,9 @@ import { ProductModule } from './product/product.module'
 import { BrandModule }  from './brand/brand.module'
 import { CatalogModule } from './catalog/catalog.module'
 
+// Load environment variables based on NODE_ENV
+const envFilePath = `.env.${process.env.NODE_ENV || 'dev'}`;
+console.log(envFilePath, 'envFilePath')
 @Module({
   imports: [
     // 静态资源，直接通过 http://host:port/upload/xxxxx.pdf访问
@@ -35,7 +38,7 @@ import { CatalogModule } from './catalog/catalog.module'
     // 配置文件
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`.env.${process.env.RUNNING_ENV}`, '.env']
+      envFilePath: [envFilePath, 'env']
     }),
     // 日志
     WinstonModule.forRoot({
@@ -129,7 +132,7 @@ import { CatalogModule } from './catalog/catalog.module'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    console.log(process.env.RUNNING_ENV, 'env')
+    console.log(process.env.NODE_ENV, 'env')
     consumer.apply(LoggerMiddleware).forRoutes('*')
   }
 }

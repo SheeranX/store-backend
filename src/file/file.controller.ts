@@ -26,8 +26,7 @@ import { FileService } from './file.service'
 import { UploadFileDto } from './dto/upload-file.dto'
 import { UploadFilesDto } from './dto/upload-files.dto'
 import { updateFileResDto } from './dto/upload-file-res-dto'
-const URL = process.env.RUNNING_ENV === 'dev' ? './public/upload/' : '../public/upload/'
-
+const URL = process.env.NODE_ENV === 'dev' ? './public/upload/' : '../public/upload/'
 @ApiTags('File')
 @Controller('file')
 @UseGuards(JwtGuard)

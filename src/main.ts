@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common'
 import helmet from 'helmet'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.setGlobalPrefix(process.env.PREFIX)

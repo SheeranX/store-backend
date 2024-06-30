@@ -2,7 +2,7 @@ import { Injectable, forwardRef, Inject } from '@nestjs/common'
 import { UpdateFileDto } from './dto/update-file.dto'
 import { unlinkSync } from 'node:fs'
 import { ProductService } from 'src/product/product.service'
-const URL = process.env.RUNNING_ENV === 'dev' ? './public/upload/' : '../public/upload/'
+const URL = process.env.NODE_ENV === 'dev' ? './public/upload/' : '../public/upload/'
 @Injectable()
 export class FileService {
   constructor (@Inject(forwardRef(() => ProductService)) private productService: ProductService) {}
