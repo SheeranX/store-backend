@@ -4,6 +4,7 @@ services:
   # MySQL 服务
   mysql:
     working_dir: /app
+    restart: always
     image: mysql:latest
     ports:
       - 3307:3306
@@ -19,6 +20,7 @@ services:
   redis:
     working_dir: /app
     image: redis:7.2.4
+    restart: always
     ports:
       - 6380:6379
     volumes:
