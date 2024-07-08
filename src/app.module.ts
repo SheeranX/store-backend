@@ -25,7 +25,8 @@ import { OrderModule } from './order/order.module'
 import { ProductModule } from './product/product.module'
 import { BrandModule }  from './brand/brand.module'
 import { CatalogModule } from './catalog/catalog.module'
-
+import { MiniProductModule } from './miniapp/product/product.module'
+import { MiniCatalogModule } from './miniapp/catalog/catalog.module'
 // Load environment variables based on NODE_ENV
 const envFilePath = `.env.${process.env.NODE_ENV || 'dev'}`;
 console.log(envFilePath, 'envFilePath')
@@ -108,7 +109,10 @@ console.log(envFilePath, 'envFilePath')
     // 品牌模块
     BrandModule,
     // 类目模块
-    CatalogModule
+    CatalogModule,
+    // 小程序请求
+    MiniProductModule,
+    MiniCatalogModule
   ],
   // controllers: [AppController],
   providers: [

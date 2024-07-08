@@ -9,9 +9,9 @@
       "env_production": {
         "NODE_ENV": "prod"
       },
-      "exec_mode": "cluster",
-      "instances": 4,
-      "max_restarts" : 3,
+      "exec_mode": "fork",
+      "instances": 1,
+      "max_restarts" : 10,
       "restart_delay" : 5000,
       "log_date_format" : "YYYY-MM-DD HH:mm Z",
       "combine_logs" : true,
