@@ -71,8 +71,17 @@ export class MiniProductService {
         catalogId: true
       }
     })
+    const brands = await this.prisma.brand.findMany({
+      where: {
+        brandId: key
+      },
+      select: {
+        brandId: true
+      }
+    })
     const subCategoryIds = subCategeories.map(item => item.subCatalogId)
     const catalogIds = categeories.map(item => item.catalogId)
+    const brandsIds = brands.map(item => item.brandId)
 
     const data = await this.prisma.product.findMany({
       where: {
@@ -95,6 +104,11 @@ export class MiniProductService {
           {
             subCatalogId: {
               in: subCategoryIds
+            }
+          },
+          {
+            brandId: {
+              in: brandsIds
             }
           }
         ]
