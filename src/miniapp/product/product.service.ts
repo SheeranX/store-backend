@@ -113,4 +113,15 @@ export class MiniProductService {
       subCatalogName: subCatalog.name
     }
   }
+
+  async findList (data) {
+    return await this.prisma.product.findMany({
+      where: {
+        subCatalogId: data.subCatalogId,
+      },
+      include: {
+        brand: true
+      }
+    })
+  }
 }
