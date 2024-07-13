@@ -129,13 +129,19 @@ export class MiniProductService {
   }
 
   async findList (data) {
-    return await this.prisma.product.findMany({
+    const list =  await this.prisma.product.findMany({
       where: {
         subCatalogId: data.subCatalogId,
       },
-      include: {
+      select: {
         brand: true
       }
     })
+    const brands = list.map(product => product.brand);
+    // 去除重复品牌
+    const uniqueBrands = Array.from(new Set(brands.map(brand => brand.id))).map(
+      id => brands.find(brand => brand.id === id),
+    );
+    return uniqueBrands
   }
 }
