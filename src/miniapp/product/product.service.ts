@@ -144,4 +144,16 @@ export class MiniProductService {
     );
     return uniqueBrands
   }
+
+
+  async getHotList () {
+    return await this.prisma.product.findMany({ where: { isHot: 1 }})
+  }
+
+  async getDiscountList () {
+    return await this.prisma.product.findMany({ where: { isDiscount: 1 }})
+  }
+  async getNewList () {
+    return await this.prisma.product.findMany({ where: { isNew: 1 }})
+  }
 }

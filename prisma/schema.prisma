@@ -53,6 +53,9 @@ model Product {
   updateTime   DateTime     @updatedAt
   productSkuIds String
   price Float
+  isHot Int @default(0)
+  isNew Int @default(0)
+  isDiscount Int @default(0)
 }
 
 model ProductSku {

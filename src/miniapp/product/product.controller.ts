@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common'
 import { MiniProductService } from './product.service'
 import {
-	ApiBearerAuth,
+	ApiOperation,
 	ApiParam,
 	ApiProperty,
 	ApiTags,
@@ -75,4 +75,22 @@ export class MiniProductController {
 			subCatalogId
 		})
 	}
+
+	@ApiProperty({ description: '获取热门推荐' })
+	@Get('/hotList')	
+  async getHostList () {
+    return await this.productService.getHotList()
+  }
+
+  @ApiProperty({ description: '获取最新数据列表' })
+	@Get('/newList')	
+  async getNewList () {
+    return await this.productService.getNewList()
+  }
+
+  @ApiProperty({ description: '获取特价列表' })
+	@Get('/discountList')
+  async getDiscountList () {
+    return await this.productService.getDiscountList()
+  }
 }
