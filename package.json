@@ -25,6 +25,7 @@
     "dev:mac:env": "brew services start redis && brew services start mysql"
   },
   "dependencies": {
+    "@nestjs/axios": "^3.0.2",
     "@nestjs/cache-manager": "^2.2.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
@@ -37,6 +38,7 @@
     "@nestjs/throttler": "^5.1.1",
     "@prisma/client": "^5.8.0",
     "@types/dotenv": "^8.2.0",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "cache-manager": "^5.3.2",
     "cache-manager-redis-store": "^3.0.1",

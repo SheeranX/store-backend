@@ -2,10 +2,15 @@ import { Prisma } from "@prisma/client";
 import { PrismaService } from "../../prisma/prisma.service";
 import { Injectable } from "@nestjs/common";
 import { CatalogService, SubCatalogService } from "src/catalog/catalog.service";
+import { RequestService } from "src/http/http.service";
 
 @Injectable()
 export class MiniProductService {
-  constructor (private prisma: PrismaService, private catalogService: CatalogService, private subCatalogService: SubCatalogService) {}
+  constructor (private prisma: PrismaService,
+    private catalogService: CatalogService,
+    private subCatalogService: SubCatalogService,
+    private requestService: RequestService
+  ) {}
   async create (data: Prisma.ProductCreateInput) {
     return await this.prisma.product.create({ data })
   }

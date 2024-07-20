@@ -27,6 +27,7 @@ import { BrandModule }  from './brand/brand.module'
 import { CatalogModule } from './catalog/catalog.module'
 import { MiniProductModule } from './miniapp/product/product.module'
 import { MiniCatalogModule } from './miniapp/catalog/catalog.module'
+import { RequestModule } from './http/http.module'
 // Load environment variables based on NODE_ENV
 const envFilePath = `.env.${process.env.NODE_ENV || 'dev'}`;
 console.log(envFilePath, 'envFilePath')
@@ -112,7 +113,8 @@ console.log(envFilePath, 'envFilePath')
     CatalogModule,
     // 小程序请求
     MiniProductModule,
-    MiniCatalogModule
+    MiniCatalogModule,
+    RequestModule // 自定义的http请求模块
   ],
   // controllers: [AppController],
   providers: [
